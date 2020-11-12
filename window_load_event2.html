@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Window: load event</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="controls">
+		  <button id="reload" type="button">Reload</button>
+		</div>
+
+		<div class="event-log">
+			<label>Event log:</label>
+			<ul class="event-log-contents">
+			</ul>
+		</div>
+	</body>
+	<script>
+		
+
+		window.addEventListener('load', (event) => {
+			let li = document.createElement("li");   // Create a <li> element
+			li.innerHTML = 'load'; // Insert text
+			li.className = `load_className`;
+			li.style.color = "blue";
+			log.appendChild(li);
+			
+			
+			let liList = document.getElementsByTagName("li");
+			for(let i = 0 ; i < liList.length ; i++) {
+				liList[i].addEventListener('click', (event) => {
+					let text = $(event.target).text();
+					let className = $(event.target).attr('class');
+					let color = $(event.target).attr('style');
+					let val = $(event.target).val();
+					let parentClass = $(event.target).parent().attr('class');
+					console.log(`parentClass: ${parentClass}`);
+					alert(`text: ${text}\n className: ${className}\n color: ${color} \n val:${val}`);
+				});
+			}
+		});
+
+		document.addEventListener('readystatechange', (event) => {
+			let li = document.createElement("li");   // Create a <li> element
+			li.innerHTML = `readystate: ${document.readyState}`; // Insert text
+			li.className = `${document.readyState}_className`;
+			li.style.color = "red";
+			log.appendChild(li);
+		});
+
+		document.addEventListener('DOMContentLoaded', (event) => {
+			let li = document.createElement("li");   // Create a <li> element
+			li.innerHTML = `DOMContentLoaded`; // Insert text
+			li.className = `DOMContentLoaded_className`;
+			li.style.color = "yellow";
+			log.appendChild(li); 
+		});
+		
+		const log = document.querySelector('.event-log-contents');
+		const reload = document.querySelector('#reload');
+
+		reload.addEventListener('click', () => {
+		  log.textContent ='';
+		  window.setTimeout(() => {
+			  window.location.reload(true);
+		  }, 200);
+		});
+		
+		
+	</script>
+</html>
