@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Window: load event</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<h1 id="h1_title">加入項目</h1>
+
+		<div>
+		  <input type="text" id="item_add">
+		</div>
+		
+		
+		<br>
+		<button id="byJQeryAfterAdd" >1. byJQeryAfterAdd</button>
+		<button id="byFunc" >2. byFunc</button>
+		<button id="byJQeryDocument" >3. byJQeryDocument</button>
+		<button id="no" >4. no</button>
+		
+		
+		<hr>
+		<ul class="list">
+		  <li>項目一<button type="button" class="btn_del">移除</button></li>
+		</ul>
+			<script>
+				$("#h1_title").addClass("title1");
+				$("#p1").removeClass("title1").addClass("para");
+				$("a.link").text("Yahoo! 網站");
+				
+				
+				
+				
+				// 項目一
+				$("button.btn_del").on("click", function(){
+				   $(this).closest("li").remove();
+				});
+				
+				
+				
+				
+				
+
+
+				// 1
+				$("#byJQeryAfterAdd").on("click", function(){
+				  if($("#item_add").val() != ""){
+					$("ul.list").append("<li>" + $("#item_add").val() + "<button type='button' '  class='btn_del'>移除</button></li>")
+						.on("click", "button.btn_del", function(){
+							$(this).closest("li").remove();
+						});
+					
+					$("#item_add").val(""); 
+				  }
+				});
+				
+				
+				
+				
+				
+				
+				// 2
+				$("#byFunc").on("click", function(){
+				  if($("#item_add").val() != ""){
+					$("ul.list").append("<li>" + $("#item_add").val() + "<button type='button' onclick='clickBtn(this)' >移除</button></li>");		
+					$("#item_add").val(""); 
+				  }
+				});
+				
+				function clickBtn (e) {
+					$(e).closest("li").remove();
+				}
+				
+				
+				
+				
+				
+				
+				
+				// 3
+				$("#byJQeryDocument").on("click", function(){
+				  if($("#item_add").val() != ""){
+					$("ul.list").append("<li>" + $("#item_add").val() + "<button type='button' class='btn_del_byJQeryDocument'>移除</button></li>");		
+					$("#item_add").val(""); 
+				  }
+				});
+				
+				$(document).on("click", "button.btn_del_byJQeryDocument", function(){
+				  $(this).closest("li").remove();
+				});
+				
+				
+				// 4.
+				$("#no").on("click", function(){
+				  if($("#item_add").val() != ""){
+					$("ul.list").append("<li>" + $("#item_add").val() + "<button type='button'>移除</button></li>");		
+					$("#item_add").val(""); 
+				  }
+				});
+			</script>
+	</body>
+</html>	
